@@ -1,0 +1,7 @@
+.image {
+  position: relative;
+  width: 230px;
+  aspect-ratio: 27/40;
+  border-radius: 10px;
+  overflow: hidden;
+}
