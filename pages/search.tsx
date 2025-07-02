@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import SearchForm from "@/components/SearchForm";
 import axios from "@/lib/axios";
 import MovieList from "@/components/MovieList";
+import Head from "next/head";
 
 export default function Search() {
   const router = useRouter();
@@ -21,6 +22,9 @@ export default function Search() {
 
   return (
     <section>
+      <Head>
+        <title>{keyword} 검색 결과 - Watchit</title>
+      </Head>
       <h2>검색 페이지</h2>
       <SearchForm initialValue={typeof keyword === "string" ? keyword : ""} />
       <h3>{keyword} 검색 결과</h3>

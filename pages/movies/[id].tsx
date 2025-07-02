@@ -4,6 +4,7 @@ import axios from "@/lib/axios";
 import MovieReviewList from "@/components/MovieReviewList";
 import styles from "@/styles/Movie.module.css";
 import Image from "next/image";
+import Head from "next/head";
 
 interface MovieType {
   id?: number;
@@ -43,13 +44,18 @@ export default function Movie() {
   if (!movie) return null; // useState 초기값이 없을 경우, movie 객체가 undefined일 경우를 대비해 컴포넌트 early return => ts 컴파일 에러 방지
 
   return (
-    <div>
-      <h2>영화 {id} 상세</h2>
-      <h3>{movie.title}</h3>
-      <div className={styles.image}>
-        <Image src={movie.posterUrl} alt={movie.title} fill />
+    <>
+      <Head>
+        <title>{movie.title} - Watchit</title>
+      </Head>
+      <div>
+        <h2>영화 {id} 상세</h2>
+        <h3>{movie.title}</h3>
+        <div className={styles.image}>
+          <Image src={movie.posterUrl} alt={movie.title} fill />
+        </div>
+        {/* <MovieReviewList movieReviews={movieReviews} /> */}
       </div>
-      {/* <MovieReviewList movieReviews={movieReviews} /> */}
-    </div>
+    </>
   );
 }
