@@ -10,6 +10,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/films/:id",
+        destination: "/movies/:id",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
