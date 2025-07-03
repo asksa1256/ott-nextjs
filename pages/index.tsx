@@ -1,24 +1,34 @@
-import { useEffect, useState } from "react";
 import MovieList from "@/components/MovieList";
 import SearchForm from "@/components/SearchForm";
 import styles from "@/styles/Home.module.css";
-import Header from "@/components/Header";
-import Container from "@/components/Container";
 import axios from "@/lib/axios";
 
-export default function Home() {
-  const [movies, setMovies] = useState([]);
+interface Movie {
+  id: number;
+  title: string;
+  year: number;
+}
 
-  async function getMovies() {
-    const res = await axios.get(`/movies`);
-    const data = res.data.results;
-    setMovies(data);
-  }
+interface Movies {
+  results: Movie[];
+}
 
-  useEffect(() => {
-    getMovies();
-  }, []);
+interface HomeProps {
+  movies: Movies;
+}
 
+export const getStaticProps = async () => {
+  const res = await axios.get<Movies>("/movies");
+  const movies = res.data.results;
+
+  return {
+    props: {
+      movies,
+    },
+  };
+};
+
+export default function Home({ movies }: HomeProps) {
   return (
     <>
       <SearchForm />

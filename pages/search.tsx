@@ -1,24 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import React from "react";
 import SearchForm from "@/components/SearchForm";
 import axios from "@/lib/axios";
 import MovieList from "@/components/MovieList";
 
-export default function Search() {
-  const router = useRouter();
-  const { keyword } = router.query;
-  const [movies, setMovies] = useState([]);
+interface Movie {
+  id: number;
+  title: string;
+  year: number;
+}
 
-  async function getMovies(query: string | string[] | undefined) {
-    const res = await axios.get(`/movies?q=${query}`);
-    const data = res.data.results;
-    setMovies(data);
-  }
+interface Movies {
+  results: Movie[];
+}
 
-  useEffect(() => {
-    getMovies(keyword);
-  }, [keyword]);
+interface SearchProps {
+  movies: Movies;
+  keyword: string;
+}
 
+export const getServerSideProps = async (context: {
+  query: { [x: string]: string };
+}) => {
+  const keyword = context.query["keyword"];
+  const res = await axios.get(`/movies?q=${keyword}`);
+  const movies = res.data.results;
+
+  return {
+    props: {
+      movies,
+      keyword,
+    },
+  };
+};
+
+export default function Search({ movies, keyword }: SearchProps) {
   return (
     <section>
       <h2>검색 페이지</h2>

@@ -1,0 +1,11 @@
+.image {
+  position: relative;
+  border-radius: 10px;
+  width: 300px;
+  aspect-ratio: 27/40;
+}
+
+.loading {
+  margin: 60px;
+  text-align: center;
+}
